@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+    <!--起别名-->
+    <typeAlias alias="NewType" type="cn.edu.sicau.domain.News"></typeAlias>
+    <typeAlias alias="CollectionType" type="cn.edu.sicau.domain.Collection"></typeAlias>
+
+    <!--insert操作，parameterClass为参数的类型-->
+
+    <select id="getNewsByCollection" parameterClass="java.lang.String" resultClass="NewType">
+        select * from News as n where n.url in(
+                  select c.url from Collection as c where c.account=#account#)
+    </select>
+
+    <select id="getCollectionByUrl" parameterClass="java.lang.String" resultClass="CollectionType">
+         select * from Collection where url=#url#
+    </select>
+
+
+
+    <insert id="insertCollectionID" parameterClass="CollectionType">
+        insert into Collection (account,url,newsTime) values ( #account#,#url#,#newsTime# )
+    </insert>
+    <delete id="deleteCollection" parameterClass="CollectionType">
+  	    delete from Collection where url=#url#
+    </delete>
+</sqlMap>

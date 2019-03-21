@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+    <!--起别名-->
+    <typeAlias alias="NewType" type="cn.edu.sicau.domain.News"></typeAlias>
+    <!--insert操作，parameterClass为参数的类型-->
+
+    <select id="getNewsByTime" resultClass="NewType">
+        select *
+        from News where flag=0 order by newsTime limit 15
+    </select>
+
+    <select id="getNewsByPopupar" resultClass="NewType">
+        select *
+        from News where category="搜狐新闻" and flag=0 order by id limit 15
+    </select>
+
+    <select id="getAllNews" resultClass="NewType">
+        select *
+        from News
+    </select>
+
+    <select id="getNewsByUrl" resultClass="NewType">
+        select *
+        from News where url=#url#
+    </select>
+    <select id="getNewsByKeyword" resultClass="NewType">
+        select *
+        from News where flag=0 order by time limit 100
+    </select>
+
+    <update id="updateFlage" parameterClass="NewType">
+        update News set flag=1 where id=#id#
+    </update>
+
+
+
+    <insert id="insertNewsID" parameterClass="NewType">
+        insert into News (url,title,keyword,imageUrl,category,newsTime) values ( #url#,#title#,#keyword#,#imageUrl#,#category#,#newsTime# )
+    </insert>
+    <delete id="deleteNews" parameterClass="java.lang.String">
+  	    delete from News where url=#url#
+    </delete>
+</sqlMap>

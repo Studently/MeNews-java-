@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+    <!--起别名-->
+    <typeAlias alias="UserType" type="cn.edu.sicau.domain.User"></typeAlias>
+    <!--insert操作，parameterClass为参数的类型-->
+
+    <select id="getAllUsers" resultClass="UserType">
+        select *
+        from t_User
+    </select>
+    <select id="getUsersByAccount" parameterClass="java.lang.String"
+            resultClass="UserType">
+        select *
+        from t_User where account=#account#
+    </select>
+
+
+
+    <update id="updatePassword" parameterClass="UserType">
+        update t_User set password=#password# where account=#account#
+    </update>
+
+    <update id="updateKeyword" parameterClass="UserType">
+        update t_User keyword=#keyword# where account=#account#
+    </update>
+
+
+    <insert id="insertUserID" parameterClass="UserType">
+        insert into t_User (account,password) values ( #account#,#password#)
+    </insert>
+    <delete id="deleteUser" parameterClass="java.lang.String">
+  	    delete from t_User where account=#account#
+    </delete>
+</sqlMap>
